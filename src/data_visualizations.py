@@ -2,7 +2,7 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-activity_list = pd.read_csv('activity_list.csv', encoding='unicode_escape')
+activity_list = pd.read_csv('..\data\\activity_list.csv', encoding='unicode_escape')
 
 # Dataset information
 # Dataframe shape
