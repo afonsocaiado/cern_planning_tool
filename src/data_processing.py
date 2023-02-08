@@ -1,0 +1,40 @@
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+activity_list = pd.read_csv('..\data\original\\activity_list.csv', encoding='unicode_escape')
+#activity = pd.read_csv('..\data\original\\activity.csv', encoding='unicode_escape')
+
+# Dataset information
+# Dataframe shape
+print("Shape: ", activity_list.shape)
+#print("Shape: ", activity.shape)
+
+# Info about the DataFrame
+print("\nInfo:")
+print(activity_list.info())
+#print(activity.info())
+
+# Descriptive statistics of the numerical columns
+print("\nDescriptive Statistics:")
+print(activity_list.describe())
+#print(activity.describe())
+
+# Number of unique values per column
+print("\nUnique values:")
+print(activity_list.nunique())
+#print(activity.nunique())
+
+# Deleting useless columns for activity creation and clustering
+activity_list = activity_list.drop(columns=['PLAN_ID', 'PLAN_UUID', 'PLAN_NAME', 'PLAN_VERSION_ID', 'PLAN_VERSION_UUID', 'PLAN_VERSION']) # PLAN ID, UUID, NAME, VERSION ID, VERSION UUID, VERSION all the same = probably irrelevant
+# Removing UUIDS
+activity_list = activity_list.drop(columns=['GROUP_RESPONSIBLE_UUID', 'RESPONSIBLE_UUID', 'ACTIVITY_TYPE_UUID', 'WBS_NODE_UUID', 'FACILITIES', 'GROUP_CONTRIBUTIONS', 'PRIORITY_UUID', 'CREATOR_UUID' ])
+activity_list = activity_list.drop(columns=['ACTIVITY_TYPE_FR', 'PRIORITY_FR', 'STATUS', 'RESPONSIBLE_ORG_UNIT', 'RESPONSIBLE_PERSON_ID', 'RESPONSIBLE_FULL_NAME', 'HAS_DATA_QUALITY', 'HAS_NOT_OK_COMMENT_FOLLOW_UP', 'LAST_UPDATE_DATE'])
+# Contributions aren't for right now
+activity_list = activity_list.drop(columns=['GROUP_CONTRIBUTION_NAMES', 'GROUP_CONTRIBUTIONS_NUM', 'VALID_GROUP_CONTRIBUTIONS_NUM', 'VALID_GROUP_CONTRIBUTIONS_PCT', 'ALLOCATED_GROUP_CONTRIB_NUM', 'CLEARED_GROUP_CONTRIB_NUM', 'DEALLOCATED_GROUP_CONTRIB_NUM', 'ALLOCATED_GROUP_CONTRIB_PCT', 'GROUP_CONTRIB_RES', 'UNDEFINED_GROUP_CONTRIB_NUM' ])
+activity_list = activity_list.drop(columns=['STATUS_REASON_UUID', 'STATUS_REASON', 'STATUS_COMMENT', 'PARENT_ACTIVITY_STATUS']) # STATUS_REASON_UUID, STATUS_REASON, STATUS_COMMENT doesnt seem to be relevant either, only 2 values and isn't crucial for creation of a new activity
+activity_list = activity_list.drop(columns=['RESPONSIBLE_SECTION_UUID', 'RESPONSIBLE_GROUP_UUID', 'RESPONSIBLE_DEPARTMENT_UUID'])
+
+print("\n", activity_list.nunique())
+
+activity_list.to_csv('..\data\processed\q1.csv', index=False)
