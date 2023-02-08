@@ -2,28 +2,31 @@ import pandas as pd
 
 activity_list = pd.read_csv('..\data\original\\activity_list.csv', encoding='unicode_escape')
 activity = pd.read_csv('..\data\original\\activity.csv', encoding='unicode_escape')
+phase = pd.read_csv('..\data\original\phase.csv', encoding='unicode_escape')
+hl_schedulable_phase = pd.read_csv('..\data\original\hl_schedulable_phase.csv', encoding='unicode_escape')
+period = pd.read_csv('..\data\original\period.csv', encoding='unicode_escape')
+#hl_sched_prop_period = pd.read_csv('..\data\original\hl_sched_prop_period.csv', encoding='unicode_escape')
+hl_sched_acce_period = pd.read_csv('..\data\original\hl_sched_acce_period.csv', encoding='unicode_escape')
 
 # Dataset information
 # Dataframe shape
-#print("Shape: ", activity_list.shape)
-#print("Shape: ", activity.shape)
+print("Shape: ", hl_schedulable_phase.shape)
+#print("Shape: ", hl_sched_prop_period.shape)
+print("Shape: ", hl_sched_acce_period.shape)
 
 # Info about the DataFrame
 #print("\nInfo:")
 #print(activity_list.info())
-#print(activity.info())
 
 # Descriptive statistics of the numerical columns
 #print("\nDescriptive Statistics:")
 #print(activity_list.describe())
-#print(activity.describe())
 
 # Number of unique values per column
 #print("\nUnique values:")
 #print(activity_list.nunique())
-#print(activity.nunique())
 
-# Deleting useless columns for activity creation and clustering
+# ACTIVITY LIST
 activity_list = activity_list.drop(columns=['PLAN_ID', 'PLAN_UUID', 'PLAN_NAME', 'PLAN_VERSION_ID', 'PLAN_VERSION_UUID', 'PLAN_VERSION']) # PLAN ID, UUID, NAME, VERSION ID, VERSION UUID, VERSION all the same = probably irrelevant
 # Removing UUIDS
 activity_list = activity_list.drop(columns=['GROUP_RESPONSIBLE_UUID', 'RESPONSIBLE_UUID', 'ACTIVITY_TYPE_UUID', 'WBS_NODE_UUID', 'FACILITIES', 'GROUP_CONTRIBUTIONS', 'PRIORITY_UUID', 'CREATOR_UUID' ])
@@ -33,13 +36,26 @@ activity_list = activity_list.drop(columns=['GROUP_CONTRIBUTION_NAMES', 'GROUP_C
 activity_list = activity_list.drop(columns=['STATUS_REASON_UUID', 'STATUS_REASON', 'STATUS_COMMENT', 'PARENT_ACTIVITY_STATUS']) # STATUS_REASON_UUID, STATUS_REASON, STATUS_COMMENT doesnt seem to be relevant either, only 2 values and isn't crucial for creation of a new activity
 activity_list = activity_list.drop(columns=['RESPONSIBLE_SECTION_UUID', 'RESPONSIBLE_GROUP_UUID', 'RESPONSIBLE_DEPARTMENT_UUID'])
 
-# Columns we want in rm_activity
+# ACTIVITY
 activity = activity.filter(items=['ID', 'LOCATION_INFORMATION', 'GOAL', 'IMPACT_NOT_DONE'])
 
-# Join columns
-merged = activity_list.merge(activity, on='ID', how='left')
+# SCHEDULE
+# PHASE
+phase = phase.filter(items=['ID', 'NAME_EN'])
+phase.rename(columns={'ID': 'PHASE_UUID'}, inplace=True)
+# HL SCHEDULABLE PHASE
+hl_schedulable_phase = hl_schedulable_phase.drop(columns=['SCHEDULE_ID'])
+hl_schedulable_phase.rename(columns={'ID': 'SCHEDULABLE_PHASE_UUID'}, inplace=True)
+# PERIOD
+period = period.drop(columns=['PERIOD_ID', 'PLAN_UUID'])
+period.rename(columns={'ID': 'PERIOD_UUID'}, inplace=True)
 
-#print("\n", activity.nunique())
-#print("Shape: ", activity_list.shape)
+# Merges
+merged_activity_list_activity = activity_list.merge(activity, on='ID', how='left') # activity + activity list
+merged_schedule_phase_phase = hl_schedulable_phase.merge(phase, on='PHASE_UUID',  how='left') # phase + schedule phase
+merged_sched_acce_period_period = hl_sched_acce_period.merge(period, on='PERIOD_UUID', how='left') # sched acce period + period
 
-merged.to_csv('..\data\processed\q1.csv', index=False)
+print("\n", merged_sched_acce_period_period.head())
+#print("Shape: ", merged_sched_acce_period_period.shape)
+
+#merged.to_csv('..\data\processed\q1.csv', index=False)
