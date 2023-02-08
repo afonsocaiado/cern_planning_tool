@@ -1,26 +1,26 @@
 import pandas as pd
 
 activity_list = pd.read_csv('..\data\original\\activity_list.csv', encoding='unicode_escape')
-#activity = pd.read_csv('..\data\original\\activity.csv', encoding='unicode_escape')
+activity = pd.read_csv('..\data\original\\activity.csv', encoding='unicode_escape')
 
 # Dataset information
 # Dataframe shape
-print("Shape: ", activity_list.shape)
+#print("Shape: ", activity_list.shape)
 #print("Shape: ", activity.shape)
 
 # Info about the DataFrame
-print("\nInfo:")
-print(activity_list.info())
+#print("\nInfo:")
+#print(activity_list.info())
 #print(activity.info())
 
 # Descriptive statistics of the numerical columns
-print("\nDescriptive Statistics:")
-print(activity_list.describe())
+#print("\nDescriptive Statistics:")
+#print(activity_list.describe())
 #print(activity.describe())
 
 # Number of unique values per column
-print("\nUnique values:")
-print(activity_list.nunique())
+#print("\nUnique values:")
+#print(activity_list.nunique())
 #print(activity.nunique())
 
 # Deleting useless columns for activity creation and clustering
@@ -33,6 +33,13 @@ activity_list = activity_list.drop(columns=['GROUP_CONTRIBUTION_NAMES', 'GROUP_C
 activity_list = activity_list.drop(columns=['STATUS_REASON_UUID', 'STATUS_REASON', 'STATUS_COMMENT', 'PARENT_ACTIVITY_STATUS']) # STATUS_REASON_UUID, STATUS_REASON, STATUS_COMMENT doesnt seem to be relevant either, only 2 values and isn't crucial for creation of a new activity
 activity_list = activity_list.drop(columns=['RESPONSIBLE_SECTION_UUID', 'RESPONSIBLE_GROUP_UUID', 'RESPONSIBLE_DEPARTMENT_UUID'])
 
-print("\n", activity_list.nunique())
+# Columns we want in rm_activity
+activity = activity.filter(items=['ID', 'LOCATION_INFORMATION', 'GOAL', 'IMPACT_NOT_DONE'])
 
-activity_list.to_csv('..\data\processed\q1.csv', index=False)
+# Join columns
+merged = activity_list.merge(activity, on='ID', how='left')
+
+#print("\n", activity.nunique())
+#print("Shape: ", activity_list.shape)
+
+merged.to_csv('..\data\processed\q1.csv', index=False)
