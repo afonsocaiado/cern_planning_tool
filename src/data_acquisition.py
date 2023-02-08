@@ -1,6 +1,4 @@
 import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
 
 activity_list = pd.read_csv('..\data\original\\activity_list.csv', encoding='unicode_escape')
 #activity = pd.read_csv('..\data\original\\activity.csv', encoding='unicode_escape')
