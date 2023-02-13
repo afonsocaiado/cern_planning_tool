@@ -10,9 +10,8 @@ hl_sched_acce_period = pd.read_csv('..\data\original\hl_sched_acce_period.csv', 
 
 # Dataset information
 # Dataframe shape
-print("Shape: ", hl_schedulable_phase.shape)
 #print("Shape: ", hl_sched_prop_period.shape)
-print("Shape: ", hl_sched_acce_period.shape)
+
 
 # Info about the DataFrame
 #print("\nInfo:")
@@ -47,15 +46,31 @@ phase.rename(columns={'ID': 'PHASE_UUID'}, inplace=True)
 hl_schedulable_phase = hl_schedulable_phase.drop(columns=['SCHEDULE_ID'])
 hl_schedulable_phase.rename(columns={'ID': 'SCHEDULABLE_PHASE_UUID'}, inplace=True)
 # PERIOD
-period = period.drop(columns=['PERIOD_ID', 'PLAN_UUID'])
+period = period.drop(columns=['PERIOD_ID', 'PLAN_UUID', 'START_DATE', 'END_DATE', 'ACTIVE', 'PERIOD_ORDER'])
 period.rename(columns={'ID': 'PERIOD_UUID'}, inplace=True)
 
 # Merges
 merged_activity_list_activity = activity_list.merge(activity, on='ID', how='left') # activity + activity list
-merged_schedule_phase_phase = hl_schedulable_phase.merge(phase, on='PHASE_UUID',  how='left') # phase + schedule phase
-merged_sched_acce_period_period = hl_sched_acce_period.merge(period, on='PERIOD_UUID', how='left') # sched acce period + period
+merged_activity_list_activity = merged_activity_list_activity.drop(columns=['ACTIVITY_ID'])
+merged_activity_list_activity.rename(columns={'ID': 'ACTIVITY_UUID'}, inplace=True)
 
-print("\n", merged_sched_acce_period_period.head())
+merged_schedule_phase_phase = hl_schedulable_phase.merge(phase, on='PHASE_UUID',  how='left') # phase + schedule phase
+merged_schedule_phase_phase = merged_schedule_phase_phase.drop(columns={'SCHEDULABLE_PHASE_UUID', 'PHASE_UUID'})
+grouped_merged_schedule_phase_phase = merged_schedule_phase_phase.groupby('ACTIVITY_UUID').agg(lambda x: x.tolist())
+#aggregated_merged_schedule_phase_phase = grouped_merged_schedule_phase_phase.agg({
+#    'AMOUNT': 'unique',
+#    'DURATION': 'unique',
+#    'NAME_EN': 'unique'
+#})
+grouped_merged_schedule_phase_phase = grouped_merged_schedule_phase_phase.reset_index()
+
+merged_activity_list_activity_schedule_phase_phase = merged_activity_list_activity.merge(grouped_merged_schedule_phase_phase, on='ACTIVITY_UUID', how='left')
+
+#merged_sched_acce_period_period = hl_sched_acce_period.merge(period, on='PERIOD_UUID', how='left') # sched acce period + period
+#merged_shcedulable_phase_sched_acce_period_period = hl_schedulable_phase.merge(merged_sched_acce_period_period, on='SCHEDULABLE_PHASE_UUID', how='left') # schedulable phase + sched acce period + period
+
+print("\n", merged_activity_list_activity_schedule_phase_phase.head(10))
 #print("Shape: ", merged_sched_acce_period_period.shape)
+print("Shape: ", merged_activity_list_activity_schedule_phase_phase.shape)
 
 #merged.to_csv('..\data\processed\q1.csv', index=False)
