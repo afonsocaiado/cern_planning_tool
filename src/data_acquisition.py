@@ -42,7 +42,7 @@ activity = activity.filter(items=['ID', 'LOCATION_INFORMATION', 'GOAL', 'IMPACT_
 # phase = phase.filter(items=['ID', 'NAME_EN'])
 # phase.rename(columns={'ID': 'PHASE_UUID', 'NAME_EN': 'PHASE_NAME'}, inplace=True)
 # HL SCHEDULABLE PHASE
-hl_schedulable_phase = hl_schedulable_phase.drop(columns=['SCHEDULE_ID'])
+hl_schedulable_phase = hl_schedulable_phase.drop(columns=['SCHEDULE_ID', 'PHASE_UUID'])
 hl_schedulable_phase.rename(columns={'ID': 'SCHEDULABLE_PHASE_UUID', 'AMOUNT': 'PHASE_AMOUNT', 'DURATION': 'PHASE_DURATION'}, inplace=True)
 # PERIOD
 period = period.drop(columns=['PERIOD_ID', 'PLAN_UUID', 'START_DATE', 'END_DATE', 'ACTIVE', 'PERIOD_ORDER', 'PARENT_UUID'])
@@ -51,8 +51,13 @@ proposed_periods = hl_sched_prop_period.merge(period, on='PERIOD_UUID', how='lef
 proposed_periods = proposed_periods.drop(columns=['PERIOD_UUID'])
 # Merging schedule phases and periods
 schedule_phases_periods = hl_schedulable_phase.merge(proposed_periods, on='SCHEDULABLE_PHASE_UUID', how='left')
-grouped_schedule_phases_periods = schedule_phases_periods.groupby('SCHEDULABLE_PHASE_UUID').agg(lambda x: x.tolist())
-# Organizing schedule phases
+grouped_schedule_phases_periods = schedule_phases_periods.groupby('SCHEDULABLE_PHASE_UUID').agg({
+    'ACTIVITY_UUID': 'first',
+    'PHASE_AMOUNT': 'first',
+    'PHASE_DURATION': 'first',
+    'NAME': lambda x: x.tolist()})   
+grouped_schedule_phases_periods = grouped_schedule_phases_periods.reset_index()
+grouped_schedule_phases_periods = grouped_schedule_phases_periods.drop(columns=['SCHEDULABLE_PHASE_UUID'])
 
 grouped_merged_schedule_phase_phase = hl_schedulable_phase.groupby('ACTIVITY_UUID').agg(lambda x: x.tolist()) # grouping information by activities
 grouped_merged_schedule_phase_phase = grouped_merged_schedule_phase_phase.reset_index()
@@ -76,9 +81,10 @@ merged_activity_list_activity.rename(columns={'ID': 'ACTIVITY_UUID'}, inplace=Tr
 # Merge total activity and schedule info
 q1 = merged_activity_list_activity.merge(grouped_merged_schedule_phase_phase, on='ACTIVITY_UUID', how='left')
 
-q1 = q1.drop(columns=['ACTIVITY_VERSION', 'SCHEDULABLE_PHASE_UUID', 'PHASE_UUID'])
+q1 = q1.drop(columns=['ACTIVITY_VERSION'])
 
 print("\n", q1.head())
 print("Shape: ", q1.shape)
+#print(grouped_schedule_phases_periods.nunique())
 
 q1.to_csv('..\data\processed\q1.csv', index=False)
