@@ -47,7 +47,13 @@ hl_schedulable_phase.rename(columns={'ID': 'SCHEDULABLE_PHASE_UUID', 'AMOUNT': '
 # PERIOD
 period = period.drop(columns=['PERIOD_ID', 'PLAN_UUID', 'START_DATE', 'END_DATE', 'ACTIVE', 'PERIOD_ORDER', 'PARENT_UUID'])
 period.rename(columns={'ID': 'PERIOD_UUID'}, inplace=True)
+proposed_periods = hl_sched_prop_period.merge(period, on='PERIOD_UUID', how='left')
+proposed_periods = proposed_periods.drop(columns=['PERIOD_UUID'])
+# Merging schedule phases and periods
+schedule_phases_periods = hl_schedulable_phase.merge(proposed_periods, on='SCHEDULABLE_PHASE_UUID', how='left')
+grouped_schedule_phases_periods = schedule_phases_periods.groupby('SCHEDULABLE_PHASE_UUID').agg(lambda x: x.tolist())
 # Organizing schedule phases
+
 grouped_merged_schedule_phase_phase = hl_schedulable_phase.groupby('ACTIVITY_UUID').agg(lambda x: x.tolist()) # grouping information by activities
 grouped_merged_schedule_phase_phase = grouped_merged_schedule_phase_phase.reset_index()
 grouped_merged_schedule_phase_phase['NEW_AMOUNT'] = grouped_merged_schedule_phase_phase['PHASE_AMOUNT'].copy()
