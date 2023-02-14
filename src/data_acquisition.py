@@ -107,6 +107,6 @@ q1 = q1.drop(columns=['ACTIVITY_VERSION'])
 
 print("\n", q1.head(10))
 print("Shape: ", q1.shape)
-#print(grouped_schedule_phases_periods.nunique())
+#print(q1.nunique())
 
 q1.to_csv('..\data\processed\q1.csv', index=False)
