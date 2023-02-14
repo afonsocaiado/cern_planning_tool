@@ -39,50 +39,38 @@ activity = activity.filter(items=['ID', 'LOCATION_INFORMATION', 'GOAL', 'IMPACT_
 
 # SCHEDULE
 # PHASE
-phase = phase.filter(items=['ID', 'NAME_EN'])
-phase.rename(columns={'ID': 'PHASE_UUID', 'NAME_EN': 'PHASE_NAME'}, inplace=True)
+# phase = phase.filter(items=['ID', 'NAME_EN'])
+# phase.rename(columns={'ID': 'PHASE_UUID', 'NAME_EN': 'PHASE_NAME'}, inplace=True)
 # HL SCHEDULABLE PHASE
 hl_schedulable_phase = hl_schedulable_phase.drop(columns=['SCHEDULE_ID'])
 hl_schedulable_phase.rename(columns={'ID': 'SCHEDULABLE_PHASE_UUID', 'AMOUNT': 'PHASE_AMOUNT', 'DURATION': 'PHASE_DURATION'}, inplace=True)
 # PERIOD
 period = period.drop(columns=['PERIOD_ID', 'PLAN_UUID', 'START_DATE', 'END_DATE', 'ACTIVE', 'PERIOD_ORDER', 'PARENT_UUID'])
 period.rename(columns={'ID': 'PERIOD_UUID'}, inplace=True)
-
-# Merges
-merged_activity_list_activity = activity_list.merge(activity, on='ID', how='left') # activity + activity list
-merged_activity_list_activity = merged_activity_list_activity.drop(columns=['ACTIVITY_ID'])
-merged_activity_list_activity.rename(columns={'ID': 'ACTIVITY_UUID'}, inplace=True)
-
-merged_schedule_phase_phase = hl_schedulable_phase.merge(phase, on='PHASE_UUID',  how='left') # phase + schedule phase
-merged_schedule_phase_phase = merged_schedule_phase_phase.drop(columns={'SCHEDULABLE_PHASE_UUID', 'PHASE_UUID'})
-grouped_merged_schedule_phase_phase = merged_schedule_phase_phase.groupby('ACTIVITY_UUID').agg(lambda x: x.tolist())
+# Organizing schedule phases
+grouped_merged_schedule_phase_phase = hl_schedulable_phase.groupby('ACTIVITY_UUID').agg(lambda x: x.tolist()) # grouping information by activities
 grouped_merged_schedule_phase_phase = grouped_merged_schedule_phase_phase.reset_index()
+grouped_merged_schedule_phase_phase['NEW_AMOUNT'] = grouped_merged_schedule_phase_phase['PHASE_AMOUNT'].copy()
 
-merged_activity_list_activity_schedule_phase_phase = merged_activity_list_activity.merge(grouped_merged_schedule_phase_phase, on='ACTIVITY_UUID', how='left')
+for i, (dur, amt) in enumerate(zip(grouped_merged_schedule_phase_phase['PHASE_DURATION'], grouped_merged_schedule_phase_phase['PHASE_AMOUNT'])):
+    for j, (d, a) in enumerate(zip(dur, amt)):
+        # If the duration is 'months', multiply the amount by 4
+        if d == 'MONTHS':
+            grouped_merged_schedule_phase_phase.at[i, 'NEW_AMOUNT'][j] = a * 4
+grouped_merged_schedule_phase_phase = grouped_merged_schedule_phase_phase.drop(columns=['PHASE_AMOUNT', 'PHASE_DURATION'])
+grouped_merged_schedule_phase_phase = grouped_merged_schedule_phase_phase.rename(columns={'NEW_AMOUNT': 'PHASE_AMOUNT'})
 
-q1 = merged_activity_list_activity_schedule_phase_phase.drop(columns=['PHASE_NAME'])
 
-q1 = q1.drop(columns=['PHASE_DURATION', 'ACTIVITY_VERSION'])
 
-# To separate amount into 3 different columns?
+# Q1 forming
+# Merge activiy and activity list tables
+merged_activity_list_activity = activity_list.merge(activity, on='ID', how='left')
+merged_activity_list_activity = merged_activity_list_activity.drop(columns=['ACTIVITY_ID']) # drop activity ID column
+merged_activity_list_activity.rename(columns={'ID': 'ACTIVITY_UUID'}, inplace=True)
+# Merge total activity and schedule info
+q1 = merged_activity_list_activity.merge(grouped_merged_schedule_phase_phase, on='ACTIVITY_UUID', how='left')
 
-# q1['NEW_AMOUNT'] = q1['PHASE_AMOUNT'].copy()
-
-# for i, (dur, amt) in enumerate(zip(q1['PHASE_DURATION'], q1['PHASE_AMOUNT'])):
-#     for j, (d, a) in enumerate(zip(dur, amt)):
-#         # If the duration is 'months', multiply the amount by 4
-#         if d == 'MONTHS':
-#             q1.at[i, 'NEW_AMOUNT'][j] = a * 4
-
-# q1 = q1.drop(columns=['PHASE_AMOUNT', 'PHASE_DURATION', 'ACTIVITY_VERSION'])
-# q1 = q1.rename(columns={'NEW_AMOUNT': 'PHASE_AMOUNT'})
-
-# q1_stacked = q1['PHASE_AMOUNT'].apply(pd.Series)
-# q1_stacked.columns = ['PREPARATION_AMOUNT', 'INSTALLATION_AMOUNT', 'COMMISSIONING_AMOUNT']
-
-# q1 = pd.concat([q1, q1_stacked], axis=1)
-
-# q1 = q1.drop(['PHASE_AMOUNT'], axis=1)
+q1 = q1.drop(columns=['ACTIVITY_VERSION', 'SCHEDULABLE_PHASE_UUID', 'PHASE_UUID'])
 
 print("\n", q1.head())
 print("Shape: ", q1.shape)
