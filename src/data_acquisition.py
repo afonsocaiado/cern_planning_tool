@@ -5,24 +5,24 @@ activity = pd.read_csv('..\data\original\\activity.csv', encoding='unicode_escap
 phase = pd.read_csv('..\data\original\phase.csv', encoding='unicode_escape')
 hl_schedulable_phase = pd.read_csv('..\data\original\hl_schedulable_phase.csv', encoding='unicode_escape')
 period = pd.read_csv('..\data\original\period.csv', encoding='unicode_escape')
-#hl_sched_prop_period = pd.read_csv('..\data\original\hl_sched_prop_period.csv', encoding='unicode_escape')
+hl_sched_prop_period = pd.read_csv('..\data\original\hl_sched_prop_period.csv', encoding='unicode_escape')
 hl_sched_acce_period = pd.read_csv('..\data\original\hl_sched_acce_period.csv', encoding='unicode_escape')
 
 # Dataset information
 # Dataframe shape
-#print("Shape: ", hl_sched_prop_period.shape)
+# print("Shape: ", hl_sched_prop_period.shape)
 
 # Info about the DataFrame
-#print("\nInfo:")
-#print(activity_list.info())
+# print("\nInfo:")
+# print(activity_list.info())
 
 # Descriptive statistics of the numerical columns
-#print("\nDescriptive Statistics:")
-#print(activity_list.describe())
+# print("\nDescriptive Statistics:")
+# print(activity_list.describe())
 
 # Number of unique values per column
-#print("\nUnique values:")
-#print(activity_list.nunique())
+# print("\nUnique values:")
+# print(activity_list.nunique())
 
 # ACTIVITY LIST
 activity_list = activity_list.drop(columns=['PLAN_ID', 'PLAN_UUID', 'PLAN_NAME', 'PLAN_VERSION_ID', 'PLAN_VERSION_UUID', 'PLAN_VERSION']) # PLAN ID, UUID, NAME, VERSION ID, VERSION UUID, VERSION all the same = probably irrelevant
@@ -45,7 +45,7 @@ phase.rename(columns={'ID': 'PHASE_UUID', 'NAME_EN': 'PHASE_NAME'}, inplace=True
 hl_schedulable_phase = hl_schedulable_phase.drop(columns=['SCHEDULE_ID'])
 hl_schedulable_phase.rename(columns={'ID': 'SCHEDULABLE_PHASE_UUID', 'AMOUNT': 'PHASE_AMOUNT', 'DURATION': 'PHASE_DURATION'}, inplace=True)
 # PERIOD
-period = period.drop(columns=['PERIOD_ID', 'PLAN_UUID', 'START_DATE', 'END_DATE', 'ACTIVE', 'PERIOD_ORDER'])
+period = period.drop(columns=['PERIOD_ID', 'PLAN_UUID', 'START_DATE', 'END_DATE', 'ACTIVE', 'PERIOD_ORDER', 'PARENT_UUID'])
 period.rename(columns={'ID': 'PERIOD_UUID'}, inplace=True)
 
 # Merges
@@ -60,10 +60,31 @@ grouped_merged_schedule_phase_phase = grouped_merged_schedule_phase_phase.reset_
 
 merged_activity_list_activity_schedule_phase_phase = merged_activity_list_activity.merge(grouped_merged_schedule_phase_phase, on='ACTIVITY_UUID', how='left')
 
-#merged_sched_acce_period_period = hl_sched_acce_period.merge(period, on='PERIOD_UUID', how='left') # sched acce period + period
-#merged_shcedulable_phase_sched_acce_period_period = hl_schedulable_phase.merge(merged_sched_acce_period_period, on='SCHEDULABLE_PHASE_UUID', how='left') # schedulable phase + sched acce period + period
+q1 = merged_activity_list_activity_schedule_phase_phase.drop(columns=['PHASE_NAME'])
 
-print("\n", merged_activity_list_activity_schedule_phase_phase.head())
-print("Shape: ", merged_activity_list_activity_schedule_phase_phase.shape)
+q1 = q1.drop(columns=['PHASE_DURATION', 'ACTIVITY_VERSION'])
 
-merged_activity_list_activity_schedule_phase_phase.to_csv('..\data\processed\q1.csv', index=False)
+# To separate amount into 3 different columns?
+
+# q1['NEW_AMOUNT'] = q1['PHASE_AMOUNT'].copy()
+
+# for i, (dur, amt) in enumerate(zip(q1['PHASE_DURATION'], q1['PHASE_AMOUNT'])):
+#     for j, (d, a) in enumerate(zip(dur, amt)):
+#         # If the duration is 'months', multiply the amount by 4
+#         if d == 'MONTHS':
+#             q1.at[i, 'NEW_AMOUNT'][j] = a * 4
+
+# q1 = q1.drop(columns=['PHASE_AMOUNT', 'PHASE_DURATION', 'ACTIVITY_VERSION'])
+# q1 = q1.rename(columns={'NEW_AMOUNT': 'PHASE_AMOUNT'})
+
+# q1_stacked = q1['PHASE_AMOUNT'].apply(pd.Series)
+# q1_stacked.columns = ['PREPARATION_AMOUNT', 'INSTALLATION_AMOUNT', 'COMMISSIONING_AMOUNT']
+
+# q1 = pd.concat([q1, q1_stacked], axis=1)
+
+# q1 = q1.drop(['PHASE_AMOUNT'], axis=1)
+
+print("\n", q1.head())
+print("Shape: ", q1.shape)
+
+q1.to_csv('..\data\processed\q1.csv', index=False)
