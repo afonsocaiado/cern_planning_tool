@@ -1,5 +1,4 @@
 import pandas as pd
-import numpy as np
 
 activity_list = pd.read_csv('..\data\original\\activity_list.csv', encoding='unicode_escape')
 activity = pd.read_csv('..\data\original\\activity.csv', encoding='unicode_escape')
@@ -109,4 +108,4 @@ print("\n", q1.head(10))
 print("Shape: ", q1.shape)
 #print(q1.nunique())
 
-q1.to_csv('..\data\processed\q1.csv', index=False)
+q1.to_csv('..\data\processed\created_q1.csv', index=False)
