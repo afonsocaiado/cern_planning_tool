@@ -1,5 +1,4 @@
 import pandas as pd
-import numpy as np
 
 # load data from generated CSV file
 created_q1 = pd.read_csv('..\data\processed\\created_q1.csv', encoding='unicode_escape')
@@ -12,8 +11,8 @@ print(created_q1.isna().sum())
 created_q1["ACTIVITY_TYPE_EN"] = created_q1["ACTIVITY_TYPE_EN"].fillna("Unknown")
 created_q1["WBS_NODE_CODE"] = created_q1["WBS_NODE_CODE"].fillna("Unknown")
 created_q1["FACILITY_NAMES"] = created_q1["FACILITY_NAMES"].fillna("Unknown")
-
 # check for NaNs in the new dataframe
 print("\n", created_q1.isna().sum())
+
 
 created_q1.to_csv('..\data\processed\clean_q1.csv', index=False)
