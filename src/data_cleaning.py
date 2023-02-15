@@ -14,5 +14,7 @@ created_q1["FACILITY_NAMES"] = created_q1["FACILITY_NAMES"].fillna("Unknown")
 # check for NaNs in the new dataframe
 print("\n", created_q1.isna().sum())
 
+created_q1 = created_q1.drop(columns=['ACTIVITY_UUID'])
+
 
 created_q1.to_csv('..\data\processed\clean_q1.csv', index=False)
