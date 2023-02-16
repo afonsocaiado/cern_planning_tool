@@ -102,9 +102,14 @@ q1['PHASE_AMOUNT_1'] = q1.apply(lambda row: [row['PHASE_AMOUNT'][row['PHASE_NAME
 q1['NAME_1'] = q1.apply(lambda row: [row['NAME'][row['PHASE_NAME'].index(val)] for val in row['PHASE_NAME_1']], axis=1)
 q1 = q1.drop(columns=['PHASE_NAME', 'PHASE_AMOUNT', 'NAME', 'PHASE_NAME_1'])
 q1 = q1.rename(columns={'PHASE_NAME_1': 'PHASE_NAME', 'PHASE_AMOUNT_1': 'PHASE_AMOUNT', 'NAME_1': 'PERIOD'})
+
+# Separate Phase Duration
+q1[['PREPARATION_DURATION', 'INSTALLATION_DURATION', 'COMMISSIONING_DURATION']] = q1['PHASE_AMOUNT'].apply(lambda x: pd.Series(x))
+q1 = q1.drop(columns=['PHASE_AMOUNT'])
+
 q1 = q1.drop(columns=['ACTIVITY_VERSION'])
 
-print("\n", q1.head(10))
+print("\n", q1.head())
 print("Shape: ", q1.shape)
 #print(q1.nunique())
 

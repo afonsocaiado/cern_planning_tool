@@ -7,7 +7,11 @@ import data_prep
 
 def kmeans(df, k):
 
+    print(df.head())
+
     data_prep.remove_nans(df)
+
+    print(df.head())
 
     # MODEL BUILDING
     # Preparing data for model

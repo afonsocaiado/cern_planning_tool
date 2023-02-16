@@ -28,4 +28,7 @@ def normalize(df, method):
 def remove_nans(df):
 
     for column in df.columns:
-        df[column] = df[column].fillna("Unknown")
+        if df[column].dtype == 'float64':
+            df[column] = df[column].fillna(0.00)
+        else:
+            df[column] = df[column].fillna("Unknown")
