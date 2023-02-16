@@ -14,6 +14,8 @@ def kmeans(df, k):
     # Encode variables
     data_prep.encode(df)
 
+    print(df.head())
+
     # Normalize the variables
     df_norm = data_prep.normalize(df, "zscore")
 
