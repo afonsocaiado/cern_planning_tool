@@ -15,13 +15,13 @@ X3 = q1[['GROUP_RESPONSIBLE_NAME', 'RESPONSIBLE_WITH_DETAILS', 'ACTIVITY_TYPE_EN
 print(X3.info())
 
 # Apply algorithms
-labels = algorithms.kmeans(X3, 10)
+labels = algorithms.kmeans(X1, 5, "minmax")
 
 # # Add cluster labels to the data
 # X1['CLUSTER'] = labels
 
 # Model evaluation
-silhouette_avg = silhouette_score(X3, labels)
+silhouette_avg = silhouette_score(X1, labels)
 print("\n", silhouette_avg)
 
 # q1.to_csv('..\data\processed\clustered_q1.csv', index=False)

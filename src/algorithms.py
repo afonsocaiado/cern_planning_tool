@@ -5,7 +5,7 @@ from sklearn.metrics import silhouette_score
 
 import data_prep
 
-def kmeans(df, k):
+def kmeans(df, k, norm):
 
     print(df.head())
 
@@ -21,7 +21,7 @@ def kmeans(df, k):
     print(df.head())
 
     # Normalize the variables
-    df_norm = data_prep.normalize(df, "zscore")
+    df_norm = data_prep.normalize(df, norm)
 
     # MODEL APPLYING
     # Initialize and fit KMeans model

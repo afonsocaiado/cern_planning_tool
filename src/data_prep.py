@@ -21,6 +21,8 @@ def normalize(df, method):
 
     if method == "zscore":
         return (df - df.mean()) / df.std()
+    elif method == "minmax":
+        return (df - df.min()) / (df.max() - df.min())
     else:
         print("Non exsiting normalizing method")
         sys.exit(1)
