@@ -1,6 +1,5 @@
 import pandas as pd
 
-from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score
 
 import algorithms
@@ -8,16 +7,17 @@ import algorithms
 # Load data from CSV file
 q1 = pd.read_csv('..\data\processed\\q1.csv', encoding='unicode_escape')
 
-# K MEANS
 # Select relevant features for clustering
 X1 = q1[['GROUP_RESPONSIBLE_NAME', 'ACTIVITY_TYPE_EN', 'WBS_NODE_CODE', 'FACILITY_NAMES']] # Simple important categorical values
 X2 = q1[['GROUP_RESPONSIBLE_NAME', 'RESPONSIBLE_WITH_DETAILS', 'ACTIVITY_TYPE_EN', 'WBS_NODE_CODE', 'PRIORITY_EN' , 'FACILITY_NAMES']] # All categorical
 
-labels = algorithms.kmeans(X1) 
-# Add cluster labels to the original data
-X1['CLUSTER'] = labels
+# Apply algorithms
+labels = algorithms.kmeans(X1, 5)
 
-# MODEL EVALUATION
+# # Add cluster labels to the data
+# X1['CLUSTER'] = labels
+
+# Model evaluation
 silhouette_avg = silhouette_score(X1, labels)
 print("\n", silhouette_avg)
 
