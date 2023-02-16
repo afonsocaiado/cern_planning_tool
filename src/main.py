@@ -33,8 +33,6 @@ labels = model.labels_
 # Add cluster labels to the original data
 X1['CLUSTER'] = labels
 
-print(X1.head())
-
 # MODEL EVALUATION
 silhouette_avg = silhouette_score(X1, labels)
 print("\n", silhouette_avg)
