@@ -16,7 +16,7 @@ X2 = q1[['GROUP_RESPONSIBLE_NAME', 'RESPONSIBLE_WITH_DETAILS', 'ACTIVITY_TYPE_EN
 X3 = q1[['GROUP_RESPONSIBLE_NAME', 'RESPONSIBLE_WITH_DETAILS', 'ACTIVITY_TYPE_EN', 'WBS_NODE_CODE', 'FACILITY_NAMES', 'PREPARATION_DURATION', 'INSTALLATION_DURATION', 'COMMISSIONING_DURATION']] # Fernando variables in presentation
 
 # Apply algorithms
-labels = algorithms.kmeans(X1, 5, "zscore")
+labels = algorithms.kmeans(X1, 5, "minmax")
 # labels = algorithms.dbscan(X1, 5, "minmax")
 
 # Model evaluation

@@ -9,7 +9,6 @@ def kmeans(df, k, norm):
 
     data_prep.remove_nans(df)
 
-
     # MODEL BUILDING
     # Preparing data for model
     # Encode variables
@@ -32,7 +31,6 @@ def kmeans(df, k, norm):
 def dbscan(df, n, norm):
     
     data_prep.remove_nans(df)
-
 
     # MODEL BUILDING
     # Preparing data for model
