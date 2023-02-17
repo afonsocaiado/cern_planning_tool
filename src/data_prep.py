@@ -1,28 +1,24 @@
 import pandas as pd
 import sys
 
-from sklearn.preprocessing import LabelEncoder
-from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.preprocessing import LabelEncoder,  MinMaxScaler
+from scipy.stats import zscore
 
 def encode(df):
 
-    # Categorical fields
-    label_encoders = {}
-    for column in df:
-        label_encoders[column] = LabelEncoder()
-        
-    # transform the categorical features to numerical using the label encoders
-    for column, label_encoder in label_encoders.items():
-        df[column] = label_encoder.fit_transform(df[column])
+    le = LabelEncoder()
+    for col in df.columns:
+        df[col] = le.fit_transform(df[col])
 
     return df
 
 def normalize(df, method):
 
     if method == "zscore":
-        return (df - df.mean()) / df.std()
+        return df.apply(zscore)
     elif method == "minmax":
-        return (df - df.min()) / (df.max() - df.min())
+        scaler = MinMaxScaler()
+        return scaler.fit_transform(df)
     else:
         print("Non exsiting normalizing method")
         sys.exit(1)

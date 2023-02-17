@@ -15,7 +15,8 @@ X3 = q1[['GROUP_RESPONSIBLE_NAME', 'RESPONSIBLE_WITH_DETAILS', 'ACTIVITY_TYPE_EN
 print(X3.info())
 
 # Apply algorithms
-labels = algorithms.kmeans(X1, 5, "minmax")
+labels = algorithms.kmeans(X1, 5, "zscore")
+# labels = algorithms.dbscan(X1, 10, "zscore")
 
 # # Add cluster labels to the data
 # X1['CLUSTER'] = labels
