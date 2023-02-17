@@ -1,6 +1,6 @@
 import pandas as pd
 
-from sklearn.metrics import silhouette_score
+from sklearn.metrics import silhouette_score, calinski_harabasz_score
 
 import algorithms
 
@@ -15,14 +15,17 @@ X3 = q1[['GROUP_RESPONSIBLE_NAME', 'RESPONSIBLE_WITH_DETAILS', 'ACTIVITY_TYPE_EN
 print(X3.info())
 
 # Apply algorithms
-labels = algorithms.kmeans(X1, 5, "zscore")
-# labels = algorithms.dbscan(X1, 10, "zscore")
+# labels = algorithms.kmeans(X1, 10, "zscore")
+labels = algorithms.dbscan(X1, 5, "minmax")
 
 # # Add cluster labels to the data
 # X1['CLUSTER'] = labels
 
 # Model evaluation
-silhouette_avg = silhouette_score(X1, labels)
-print("\n", silhouette_avg)
+silhouette = silhouette_score(X1, labels)
+print("\n Silhouette Coefficient", silhouette)
+
+calinski = calinski_harabasz_score(X1, labels)
+print("\n Calinski-Harabasz Index:", calinski)
 
 # q1.to_csv('..\data\processed\clustered_q1.csv', index=False)
