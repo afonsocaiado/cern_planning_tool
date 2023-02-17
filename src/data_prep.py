@@ -27,6 +27,6 @@ def remove_nans(df):
 
     for column in df.columns:
         if df[column].dtype == 'float64':
-            df[column] = df[column].fillna(0.00)
+            df.loc[column] = df[column].fillna(0.00)
         else:
-            df[column] = df[column].fillna("Unknown")
+            df.loc[column] = df[column].fillna("Unknown")

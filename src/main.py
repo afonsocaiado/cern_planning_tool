@@ -3,6 +3,9 @@ import pandas as pd
 from sklearn.metrics import silhouette_score, calinski_harabasz_score
 
 import algorithms
+import warnings
+
+warnings.filterwarnings("ignore")
 
 # Load data from CSV file
 q1 = pd.read_csv('..\data\processed\\q1.csv', encoding='unicode_escape')
@@ -12,11 +15,9 @@ X1 = q1[['GROUP_RESPONSIBLE_NAME', 'ACTIVITY_TYPE_EN', 'WBS_NODE_CODE', 'FACILIT
 X2 = q1[['GROUP_RESPONSIBLE_NAME', 'RESPONSIBLE_WITH_DETAILS', 'ACTIVITY_TYPE_EN', 'WBS_NODE_CODE', 'FACILITY_NAMES', 'PRIORITY_EN']] # All categorical
 X3 = q1[['GROUP_RESPONSIBLE_NAME', 'RESPONSIBLE_WITH_DETAILS', 'ACTIVITY_TYPE_EN', 'WBS_NODE_CODE', 'FACILITY_NAMES', 'PREPARATION_DURATION', 'INSTALLATION_DURATION', 'COMMISSIONING_DURATION']] # Fernando variables in presentation
 
-print(X3.info())
-
 # Apply algorithms
-# labels = algorithms.kmeans(X1, 10, "zscore")
-labels = algorithms.dbscan(X1, 5, "minmax")
+labels = algorithms.kmeans(X1, 5, "zscore")
+# labels = algorithms.dbscan(X1, 5, "minmax")
 
 # # Add cluster labels to the data
 # X1['CLUSTER'] = labels
