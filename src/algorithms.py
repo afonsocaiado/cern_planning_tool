@@ -22,6 +22,10 @@ def kmeans(df, k, norm):
     # Initialize and fit KMeans model
     model = KMeans(n_clusters=k)
     model.fit(df_norm)
+
+    # Add cluster labels to the data
+    df['CLUSTER'] = model.labels_
+
     # Get cluster assignments for each data point
     return model.labels_
 
@@ -41,5 +45,8 @@ def dbscan(df, n, norm):
     # Perform clustering with DBSCAN
     dbscan = DBSCAN(eps=0.3, min_samples=n)
     cluster_labels = dbscan.fit_predict(df_norm)
+
+    # Add cluster labels to the data
+    df['CLUSTER'] = cluster_labels
 
     return cluster_labels

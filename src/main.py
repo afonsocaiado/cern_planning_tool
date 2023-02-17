@@ -19,9 +19,6 @@ X3 = q1[['GROUP_RESPONSIBLE_NAME', 'RESPONSIBLE_WITH_DETAILS', 'ACTIVITY_TYPE_EN
 labels = algorithms.kmeans(X1, 5, "zscore")
 # labels = algorithms.dbscan(X1, 5, "minmax")
 
-# # Add cluster labels to the data
-# X1['CLUSTER'] = labels
-
 # Model evaluation
 silhouette = silhouette_score(X1, labels)
 print("\n Silhouette Coefficient", silhouette)
