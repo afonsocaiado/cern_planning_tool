@@ -4,11 +4,16 @@ import sys
 from sklearn.preprocessing import LabelEncoder,  MinMaxScaler
 from scipy.stats import zscore
 
+import joblib
+
 def encode(df):
 
     le = LabelEncoder()
+
     for col in df.columns:
         df[col] = le.fit_transform(df[col])
+
+    joblib.dump(le, "encoder.joblib")
 
     return df
 
@@ -30,3 +35,5 @@ def remove_nans(df):
             df[column] = df[column].fillna(0.00)
         else:
             df[column] = df[column].fillna("Unknown")
+
+    return df

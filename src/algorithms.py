@@ -7,15 +7,23 @@ import data_prep
 
 def kmeans(df, k, norm):
 
+    print(df.head())
+
     data_prep.remove_nans(df)
+
+    print(df.head())
 
     # MODEL BUILDING
     # Preparing data for model
     # Encode variables
     data_prep.encode(df)
 
+    print(df.head())
+
     # Normalize the variables
     df_norm = data_prep.normalize(df, norm)
+
+    print(df.head())
 
     # MODEL APPLYING
     # Initialize and fit KMeans model
@@ -26,7 +34,7 @@ def kmeans(df, k, norm):
     df['CLUSTER'] = model.labels_
 
     # Get cluster assignments for each data point
-    return model.labels_
+    return model, model.labels_
 
 def dbscan(df, n, norm):
     
@@ -41,10 +49,10 @@ def dbscan(df, n, norm):
     df_norm = data_prep.normalize(df, norm)
 
     # Perform clustering with DBSCAN
-    dbscan = DBSCAN(eps=0.3, min_samples=n)
-    cluster_labels = dbscan.fit_predict(df_norm)
+    model = DBSCAN(eps=0.3, min_samples=n)
+    cluster_labels = model.fit_predict(df_norm)
 
     # Add cluster labels to the data
     df['CLUSTER'] = cluster_labels
 
-    return cluster_labels
+    return model, cluster_labels
