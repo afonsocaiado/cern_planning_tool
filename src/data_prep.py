@@ -12,7 +12,7 @@ def encode(df):
 
     for col in df.columns:
         le.fit(df[col])
-        joblib.dump(le, "models/" + col + ".joblib")
+        # joblib.dump(le, "models/" + col + ".joblib")
         df[col] = le.transform(df[col])
 
     return df
@@ -24,7 +24,7 @@ def normalize(df, method):
     elif method == "minmax":
         scaler = MinMaxScaler()
         scaler.fit(df)
-        joblib.dump(scaler, "models/minmax.joblib")
+        # joblib.dump(scaler, "models/minmax.joblib")
         return scaler.transform(df)
     else:
         print("Non exsiting normalizing method")

@@ -1,6 +1,7 @@
 import pandas as pd
 
 from sklearn.metrics import silhouette_score, calinski_harabasz_score
+import matplotlib.pyplot as plt
 
 import algorithms
 import joblib
@@ -17,17 +18,31 @@ X2 = q1[['GROUP_RESPONSIBLE_NAME', 'RESPONSIBLE_WITH_DETAILS', 'ACTIVITY_TYPE_EN
 X3 = q1[['GROUP_RESPONSIBLE_NAME', 'RESPONSIBLE_WITH_DETAILS', 'ACTIVITY_TYPE_EN', 'WBS_NODE_CODE', 'FACILITY_NAMES', 'PREPARATION_DURATION', 'INSTALLATION_DURATION', 'COMMISSIONING_DURATION']] # Fernando variables in presentation
 
 # Apply algorithms
-model, labels = algorithms.kmeans(X1, 5, "minmax")
+# model, labels = algorithms.kmeans(X1, 5, "minmax")
 # labels = algorithms.dbscan(X1, 5, "minmax")
 
 # Save the clustering model
-joblib.dump(model, 'models/clustering_model.joblib')
+# joblib.dump(model, 'models/clustering_model.joblib')
 
 # Model evaluation
-silhouette = silhouette_score(X1, labels)
-print("\n Silhouette Coefficient", silhouette)
+# silhouette = silhouette_score(X1, labels)
+# print("\n Silhouette Coefficient", silhouette)
 
-calinski = calinski_harabasz_score(X1, labels)
-print("\n Calinski-Harabasz Index:", calinski)
+# calinski = calinski_harabasz_score(X1, labels)
+# print("\n Calinski-Harabasz Index:", calinski)
 
-q1.to_csv('..\data\processed\clustered_q1.csv', index=False)
+silhouette_coeffs = []
+
+for k in range(2,11):
+    model, labels = algorithms.kmeans(X3, k, "minmax")
+    silhouette = silhouette_score(X3, labels)
+    silhouette_coeffs.append(silhouette)
+
+plt.style.use("fivethirtyeight")
+plt.plot(range(2, 11), silhouette_coeffs)
+plt.xticks(range(2, 11))
+plt.xlabel("Number of Clusters")
+plt.ylabel("Silhouette Coefficient")
+plt.show()
+
+# q1.to_csv('..\data\processed\clustered_q1.csv', index=False)
