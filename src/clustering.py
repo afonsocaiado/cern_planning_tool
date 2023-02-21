@@ -21,7 +21,7 @@ model, labels = algorithms.kmeans(X3, 5, "minmax")
 # labels = algorithms.dbscan(X1, 5, "minmax")
 
 # Save the clustering model
-joblib.dump(model, 'clustering_model.joblib')
+joblib.dump(model, 'models/clustering_model.joblib')
 
 # Model evaluation
 silhouette = silhouette_score(X3, labels)

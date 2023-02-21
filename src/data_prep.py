@@ -12,8 +12,7 @@ def encode(df):
 
     for col in df.columns:
         df[col] = le.fit_transform(df[col])
-
-    joblib.dump(le, "encoder.joblib")
+        joblib.dump(le, "models/" + col + ".joblib")
 
     return df
 
