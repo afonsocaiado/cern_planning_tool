@@ -1,5 +1,8 @@
 import pandas as pd
+import numpy as np
+
 from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import LabelEncoder
 
 import joblib
 import data_prep
@@ -8,8 +11,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 # Load the saved model
-model = joblib.load('clustering_model.joblib')
-encoder = joblib.load('encoder.joblib')
+model = joblib.load('models/clustering_model.joblib')
 
 def suggest_values(activity):
 
@@ -27,19 +29,25 @@ def suggest_values(activity):
     # new_data = model.transform(new_data)
     new_data = data_prep.remove_nans(new_data)
 
-    print(new_data.head())
 
     for col in new_data.columns:
+        encoder = joblib.load("models/" + col + ".joblib")
         new_data[col] = encoder.transform(new_data[col])
 
+    scaler = joblib.load("models/" + col + ".joblib")
+
+    print(new_data)
+
+    new_data = new_data.values.flatten()
+
+    new_data = scaler.transform(new_data)
+
     print(new_data.head())
-
-    # new_data = data_prep.normalize(new_data, "zscore")
-
-    # print(new_data[features])
 
     # Cluster the new activity
     new_cluster = model.predict(new_data)[0]
+
+    print(new_cluster)
 
     # Get the closest cluster in the dataset
     cluster_distances = pd.DataFrame({
@@ -75,7 +83,7 @@ activity = {
     'ACTIVITY_TYPE_EN': 'Consolidation & upgrade/Other',
     'WBS_NODE_CODE': 'NONE',
     'FACILITY_NAMES': 'LHC Machine',
-    'PREPARATION_DURATION': None,
+    'PREPARATION_DURATION': float("nan"),
     'INSTALLATION_DURATION': 2,
     'COMMISSIONING_DURATION': 3
 }

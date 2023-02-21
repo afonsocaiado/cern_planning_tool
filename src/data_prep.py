@@ -11,8 +11,9 @@ def encode(df):
     le = LabelEncoder()
 
     for col in df.columns:
-        df[col] = le.fit_transform(df[col])
+        le.fit(df[col])
         joblib.dump(le, "models/" + col + ".joblib")
+        df[col] = le.transform(df[col])
 
     return df
 
@@ -22,7 +23,9 @@ def normalize(df, method):
         return df.apply(zscore)
     elif method == "minmax":
         scaler = MinMaxScaler()
-        return scaler.fit_transform(df)
+        scaler.fit(df)
+        joblib.dump(scaler, "models/minmax.joblib")
+        return scaler.transform(df)
     else:
         print("Non exsiting normalizing method")
         sys.exit(1)
