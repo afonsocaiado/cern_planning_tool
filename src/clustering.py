@@ -33,14 +33,14 @@ X3 = q1[['GROUP_RESPONSIBLE_NAME', 'RESPONSIBLE_WITH_DETAILS', 'ACTIVITY_TYPE_EN
 
 silhouette_coeffs = []
 
-for k in range(2,11):
-    model, labels = algorithms.kmeans(X3, k, "minmax")
-    silhouette = silhouette_score(X3, labels)
+for k in range(2,15):
+    model, labels = algorithms.kmeans(X1, k, "standard")
+    silhouette = silhouette_score(X1, labels)
     silhouette_coeffs.append(silhouette)
 
 plt.style.use("fivethirtyeight")
-plt.plot(range(2, 11), silhouette_coeffs)
-plt.xticks(range(2, 11))
+plt.plot(range(2, 15), silhouette_coeffs)
+plt.xticks(range(2, 15))
 plt.xlabel("Number of Clusters")
 plt.ylabel("Silhouette Coefficient")
 plt.show()

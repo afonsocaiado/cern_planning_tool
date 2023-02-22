@@ -1,7 +1,7 @@
 import pandas as pd
 import sys
 
-from sklearn.preprocessing import LabelEncoder,  MinMaxScaler
+from sklearn.preprocessing import LabelEncoder,  MinMaxScaler, StandardScaler
 from scipy.stats import zscore
 
 import joblib
@@ -25,6 +25,10 @@ def normalize(df, method):
         scaler = MinMaxScaler()
         scaler.fit(df)
         # joblib.dump(scaler, "models/minmax.joblib")
+        return scaler.transform(df)
+    elif method == "standard":
+        scaler = StandardScaler()
+        scaler.fit(df)
         return scaler.transform(df)
     else:
         print("Non exsiting normalizing method")

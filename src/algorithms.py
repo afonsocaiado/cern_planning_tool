@@ -3,19 +3,19 @@ import pandas as pd
 from sklearn.cluster import KMeans
 from sklearn.cluster import DBSCAN
 
-import data_prep
+import utils
 
 def kmeans(df, k, norm):
 
-    data_prep.remove_nans(df)
+    utils.remove_nans(df)
 
     # MODEL BUILDING
     # Preparing data for model
     # Encode variables
-    data_prep.encode(df)
+    utils.encode(df)
 
     # Normalize the variables
-    df_norm = data_prep.normalize(df, norm)
+    df_norm = utils.normalize(df, norm)
     
     # MODEL APPLYING
     # Initialize and fit KMeans model
@@ -30,15 +30,15 @@ def kmeans(df, k, norm):
 
 def dbscan(df, n, norm):
     
-    data_prep.remove_nans(df)
+    utils.remove_nans(df)
 
     # MODEL BUILDING
     # Preparing data for model
     # Encode variables
-    data_prep.encode(df)
+    utils.encode(df)
 
     # Normalize the variables
-    df_norm = data_prep.normalize(df, norm)
+    df_norm = utils.normalize(df, norm)
 
     # Perform clustering with DBSCAN
     model = DBSCAN(eps=0.3, min_samples=n)

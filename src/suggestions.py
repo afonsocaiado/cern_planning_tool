@@ -5,7 +5,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import LabelEncoder
 
 import joblib
-import data_prep
+import utils
 import warnings
 
 warnings.filterwarnings("ignore")
@@ -27,7 +27,7 @@ def suggest_values(activity):
 
     # Scale the features
     # new_data = model.transform(new_data)
-    new_data = data_prep.remove_nans(new_data)
+    new_data = utils.remove_nans(new_data)
 
 
     for col in new_data.columns:
