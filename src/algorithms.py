@@ -7,8 +7,6 @@ import utils
 
 def kmeans(df, k, norm):
 
-    utils.remove_nans(df)
-
     # MODEL BUILDING
     # Preparing data for model
     # Encode variables
@@ -29,8 +27,6 @@ def kmeans(df, k, norm):
     return model, model.labels_
 
 def dbscan(df, n, norm):
-    
-    utils.remove_nans(df)
 
     # MODEL BUILDING
     # Preparing data for model

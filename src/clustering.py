@@ -10,7 +10,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 # Load data from CSV file
-q1 = pd.read_csv('..\data\processed\\q1.csv', encoding='unicode_escape')
+q1 = pd.read_csv('..\data\processed\\preprocessed_q1.csv', encoding='unicode_escape')
 
 # Select relevant features for clustering
 X1 = q1[['GROUP_RESPONSIBLE_NAME', 'ACTIVITY_TYPE_EN', 'WBS_NODE_CODE', 'FACILITY_NAMES']] # Simple important categorical values
@@ -34,7 +34,7 @@ X3 = q1[['GROUP_RESPONSIBLE_NAME', 'RESPONSIBLE_WITH_DETAILS', 'ACTIVITY_TYPE_EN
 silhouette_coeffs = []
 
 for k in range(2,15):
-    model, labels = algorithms.kmeans(X1, k, "standard")
+    model, labels = algorithms.kmeans(X1, k, "minmax")
     silhouette = silhouette_score(X1, labels)
     silhouette_coeffs.append(silhouette)
 
