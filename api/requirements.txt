@@ -1,0 +1,7 @@
+Flask
+pandas
+numpy
+gower
+scikit-learn
+Flask-Testing
+mlxtend

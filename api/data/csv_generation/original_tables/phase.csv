@@ -1,0 +1,4 @@
+"ID","PHASE_ID","PLAN_UUID","NAME_EN","NAME_FR","ORDER_IN_TYPE","ACTIVE"
+"206cc791-de8a-453f-aa8c-fdd86e7e3246",61,"8a77c09c-de70-4ff6-bae7-964d1913b9e0","Preparation","Preparation",1,1
+"dab03dec-bb77-4b3d-9e2c-49362b0442b2",62,"8a77c09c-de70-4ff6-bae7-964d1913b9e0","Installation","Installation",2,1
+"e73a06fe-2802-4d98-9478-ec42024fb354",63,"8a77c09c-de70-4ff6-bae7-964d1913b9e0","Commissioning","Commissioning",3,1

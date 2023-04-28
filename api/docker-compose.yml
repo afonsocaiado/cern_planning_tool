@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  api:
+    build: .
+    image: suggestion_api
+    container_name: suggestion_api_container
+    ports:
+      - "5000:5000"

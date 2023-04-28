@@ -1,0 +1,44 @@
+ACTIVITY_UUID,TITLE,GROUP_RESPONSIBLE_NAME,RESPONSIBLE_WITH_DETAILS,ACTIVITY_TYPE_EN,WBS_NODE_CODE,FACILITY_NAMES,PRIORITY_EN,CREATOR_NAME,CREATION_DATE,LOCATION_INFORMATION,GOAL,IMPACT_NOT_DONE
+8a1c176e-3c7d-464c-991d-8f40c8f9a26a,Injectors De-cabling phase 2 project - PS ring (2 more octants),EN-ACE,FERNANDO BALTASAR DOS SANTOS PEDR (EN-ACE-OSS),Safety,OTHER,PS,1. Safety,FERNANDO BALTASAR DOS SANTOS PEDR (EN-ACE-OSS),05-APR-22,PS Ring,"Reduce the fire load related to the old unused cables and in some cables of cables not respecting the IS23
+De-cabling the obsolete cables and cables left from the previous campaigns
+Create space for new cable pulling","In case of Fire, all this fire load could make the Fire Brigade intervention impossible and due to the properties of these cables material a considerable damage to the machine
+Difficulties to pull new cables
+Electro magnetic interference (EMC) due to the mix of cables"
+501bb340-75b1-4ae9-bfd8-5ec04be49685,Injectors De-cabling phase 2 project - PS ring (remaining octants),EN-ACE,FERNANDO BALTASAR DOS SANTOS PEDR (EN-ACE-OSS),Safety,OTHER,PS,1. Safety,FERNANDO BALTASAR DOS SANTOS PEDR (EN-ACE-OSS),05-APR-22,PS Ring,"Reduce the fire load related to the old unused cables and in some cables of cables not respecting the IS23
+De-cabling the obsolete cables and cables left from the previous campaigns
+Create space for new cable pulling","In case of Fire, all this fire load could make the Fire Brigade intervention impossible and due to the properties of these cables material a considerable damage to the machine
+Difficulties to pull new cables
+Electro magnetic interference (EMC) due to the mix of cables"
+3348ee2d-0a48-4240-8159-832abb4c66f8,Injectors De-cabling phase 2 project - PS ring (2nd and 3rd octants),EN-ACE,FERNANDO BALTASAR DOS SANTOS PEDR (EN-ACE-OSS),Safety,OTHER,PS,1. Safety,FERNANDO BALTASAR DOS SANTOS PEDR (EN-ACE-OSS),05-APR-22,PS Ring,"Reduce the fire load related to the old unused cables and in some cables of cables not respecting the IS23
+De-cabling the obsolete cables and cables left from the previous campaigns
+Create space for new cable pulling","In case of Fire, all this fire load could make the Fire Brigade intervention impossible and due to the properties of these cables material a considerable damage to the machine
+Difficulties to pull new cables
+Electro magnetic interference (EMC) due to the mix of cables"
+01f0cedd-b7bc-49dd-9c48-80cb74d484b8,Injectors De-cabling phase 2 project - PS ring (1st octant),EN-ACE,FERNANDO BALTASAR DOS SANTOS PEDR (EN-ACE-OSS),Safety,OTHER,PS,1. Safety,FERNANDO BALTASAR DOS SANTOS PEDR (EN-ACE-OSS),05-APR-22,LINAC3,"Reduce the fire load related to the old unused cables and in some cables of cables not respecting the IS23
+De-cabling the obsolete cables and cables left from the previous campaigns
+Create space for new cable pulling","In case of Fire, all this fire load could make the Fire Brigade intervention impossible and due to the properties of these cables material a considerable damage to the machine
+Difficulties to pull new cables
+Electro magnetic interference (EMC) due to the mix of cables"
+19094632-91de-4a02-b3b7-76b1ee9f1264,Injectors De-cabling phase 2 project - LSS1 de-cabling,EN-ACE,FERNANDO BALTASAR DOS SANTOS PEDR (EN-ACE-OSS),Safety,OTHER,SPS,1. Safety,FERNANDO BALTASAR DOS SANTOS PEDR (EN-ACE-OSS),05-APR-22,LSS1 right and left,"Reduce the fire load related to the old unused cables and in some cables of cables not respecting the IS23
+De-cabling the obsolete cables and cables left from the previous campaigns
+Create space for new cable pulling","In case of Fire, all this fire load could make the Fire Brigade intervention impossible and due to the properties of these cables material a considerable damage to the machine
+Difficulties to pull new cables
+Electro magnetic interference (EMC) due to the mix of cables"
+9a69df4f-652e-429f-8ad0-4cce7be596fc,"Injectors De-cabling phase 2 project - SPS2 (BA2, Shaft and TA2)",EN-ACE,FERNANDO BALTASAR DOS SANTOS PEDR (EN-ACE-OSS),Safety,OTHER,SPS,1. Safety,FERNANDO BALTASAR DOS SANTOS PEDR (EN-ACE-OSS),05-APR-22,"BA2
+Shaft
+TA2","Reduce the fire load related to the old unused cables and in some cables of cables not respecting the IS23
+De-cabling the obsolete cables and cables left from the previous campaigns
+Create space for new cable pulling","In case of Fire, all this fire load could make the Fire Brigade intervention impossible and due to the properties of these cables material a considerable damage to the machine
+Difficulties to pull new cables
+Electro magnetic interference (EMC) due to the mix of cables"
+608b1bdd-cd36-4545-9d1b-f86edbe3f2b9,"Injectors De-cabling phase 2 project - SPS4 (BA4, Shaft and TA4)",EN-ACE,FERNANDO BALTASAR DOS SANTOS PEDR (EN-ACE-OSS),Safety,OTHER,SPS,1. Safety,FERNANDO BALTASAR DOS SANTOS PEDR (EN-ACE-OSS),05-APR-22,"BA4
+Shaft
+TA4","Reduce the fire load related to the old unused cables and in some cables of cables not respecting the IS23
+De-cabling the obsolete cables and cables left from the previous campaigns
+Create space for new cable pulling","In case of Fire, all this fire load could make the Fire Brigade intervention impossible and due to the properties of these cables material a considerable damage to the machine
+Difficulties to pull new cables
+Electro magnetic interference (EMC) due to the mix of cables"
+e13d7fe5-542f-4d90-a96b-312cab0e96d3,Ventilation and fire resistant door HL LHC 1 -US lift SAS,EN-ACE,SERGE GRILLOT (EN-ACE-COS),Safety,HL-17,HL-LHC,3. HL-LHC and LIU projects,SERGE GRILLOT (EN-ACE-COS),14-APR-22,US17,HL-LHC,As these door are needed for Safety the machine will not be able to start
+32ea18ce-6744-497c-8717-2255647f7c39,Fire resistant door HL LHC 5 - UR,EN-ACE,SERGE GRILLOT (EN-ACE-COS),Safety,HL-17,HL-LHC,3. HL-LHC and LIU projects,SERGE GRILLOT (EN-ACE-COS),14-APR-22,UR55,HL-LHC,As these door are needed for Safety the machine will not be able to start
+fadfbbd6-5df5-48f2-9a70-6f55530c7f24,Fire & pressure-resistant door HL LHC 5 -UL,EN-ACE,SERGE GRILLOT (EN-ACE-COS),Safety,HL-17,HL-LHC,3. HL-LHC and LIU projects,SERGE GRILLOT (EN-ACE-COS),14-APR-22,"UL53
+UL57",HL-LHC,As these door are needed for Safety the machine will not be able to start
