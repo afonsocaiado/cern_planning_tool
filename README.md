@@ -38,6 +38,8 @@ This repository contains a machine learning solution for predicting and planning
   - Clustering algorithms
   - Feature engineering
   - Evaluation tools
+- **[docs/](docs/)**: Documentation files
+  - Complete dissertation thesis document
 
 ## 🚀 Getting Started
 
@@ -59,7 +61,13 @@ For detailed installation and usage instructions, see the [API README](api/READM
 
 ## 📚 Documentation
 
-Comprehensive documentation is available in the [API wiki](api/wiki/) folder, including:
+### Thesis Document
+
+The complete master's thesis detailing the research, methodology, and implementation of this project is available in the [docs folder](docs/Dissertation-Afonso-Sousa.pdf).
+
+### API Documentation
+
+Comprehensive API documentation is available in the [API wiki](api/wiki/) folder, including:
 
 - API structure and endpoints
 - Data maintenance procedures
@@ -68,7 +76,7 @@ Comprehensive documentation is available in the [API wiki](api/wiki/) folder, in
 
 ## 🔗 Related Publications
 
-- [Link to thesis document - Coming soon](#)
+- [Master's Thesis](docs/Dissertation-Afonso-Sousa.pdf) - Full dissertation document
 - [Link to related conference paper - Coming soon](#)
 
 ## 📄 License
