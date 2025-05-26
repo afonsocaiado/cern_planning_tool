@@ -77,7 +77,7 @@ Comprehensive API documentation is available in the [API wiki](api/wiki/) folder
 ## 🔗 Related Publications
 
 - [Master's Thesis](docs/Dissertation-Afonso-Sousa.pdf) - Full dissertation document
-- [Link to related conference paper - Coming soon](#)
+- [Link to related conference paper - Ongoing](#)
 
 ## 📄 License
 
